@@ -1,41 +1,52 @@
 ﻿using BorrowLend.Data;
 using BorrowLend.Models;
+using BorrowLend.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BorrowLend.Controllers
 {
-    public class ItemController : Controller
+    public class ExpenseController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public ItemController(ApplicationDbContext db)
+        public ExpenseController(ApplicationDbContext db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
-            IEnumerable<Item> obj = _db.Items;
+            IEnumerable<Expense> obj = _db.Expenses;
             return View(obj);
         }
         public IActionResult Create()
         {
-            return View();
+            ExpenseVM expenseVM = new ExpenseVM
+            {
+                Expense = new Expense(),
+                TypeDropDown = _db.ExpensesType.Select(i => new SelectListItem
+                {
+                    Text = i.ExpenseTypeName,
+                    Value = i.Id.ToString()
+                })
+            };
+            return View(expenseVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Item item)
+        public IActionResult Create(ExpenseVM expenseVM)
         {
             if (ModelState.IsValid)
             {
-                _db.Items.Add(item);
+                _db.Expenses.Add(expenseVM.Expense);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            return View(expenseVM);
         }
         public IActionResult Update(int? id)
         {
             var obj = _db.Items.Find(id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -49,13 +60,9 @@ namespace BorrowLend.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
-            {
-                _db.Items.Update(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(obj);
+            _db.Items.Update(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
         public IActionResult Delete(int? id)
         {
@@ -74,7 +81,7 @@ namespace BorrowLend.Controllers
             {
                 return NotFound();
             }
-            _db.Items.Remove(obj);
+            _db.Items.Remove(_db.Items.Find(obj.Id));
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

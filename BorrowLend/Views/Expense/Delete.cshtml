@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BorrowLend.Models.ViewModel.ExpenseVM;
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<form method="post" asp-action="Delete">
+    <h1>Delete Expense</h1>
+    <table>
+        <thead>
+            <tr>
+                <th width="30%">Expense name</th>
+                <th width="30%">Amount</th>
+                <th width="30%">Expense Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="30%"><input asp-for="Expense.ExpenseName" /></td>
+                <td width="30%"><input asp-for="Expense.Amount" /></td>
+                <td width="30%">
+                    <select asp-for="Expense.ExpenseTypeId" asp-items="@Model.TypeDropDown" class="form-control">
+                        <option select>--Select Expense Type--</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

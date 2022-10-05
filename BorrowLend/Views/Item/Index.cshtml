@@ -8,6 +8,9 @@
             <h2 class="text-primary">
                 Borrowed items list
             </h2>
+            <div class="col-6 text-right">
+                <a class="btn btn-primary w-75" asp-controller="Item" asp-action="Create">Create new item</a>
+            </div>
         </div>
         @if (Model.Count() > 0)
         {
@@ -24,6 +27,10 @@
                             <td> @item.ItemName </td>
                             <td> @item.Borrower </td>
                             <td> @item.BorrLender </td>
+                            <td width="25%">
+                                <a class="btn btn-success m-1" asp-controller="Item" asp-action="Update" asp-route-id=@item.Id>Update</a>
+                                <a class="btn btn-danger m-1" asp-controller="Item" asp-action="Delete" asp-route-id=@item.Id>Delete</a>
+                            </td>
                         </tr>
                     }
                 </tbody>

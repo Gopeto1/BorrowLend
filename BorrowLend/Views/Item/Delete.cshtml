@@ -1,0 +1,26 @@
+﻿@model BorrowLend.Models.Item
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1>Delete</h1>
+<form method="post" asp-action="Delete">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row">
+                <label class="col-3 m-1 form-control" asp-for="ItemName"></label>
+                <label class="col-3 m-1 form-control" asp-for="Borrower"></label>
+                <label class="col-3 m-1 form-control" asp-for="BorrLender"></label>
+            </div>
+            <div class="form-group row">
+                <input class="col-3 form-control m-1" asp-for="ItemName" />
+                <input class="col-3 form-control m-1" asp-for="Borrower" />
+                <input class="col-3 form-control m-1" asp-for="BorrLender" />
+            </div>
+            <div class="form-group row">
+                <div class="col-3 form-control m-1"></div>
+                <button type="submit" class="col-3 btn btn-success m-1">Delete</button>
+                <button asp-action="Index" class="col-3 btn btn-danger m-1">Back</button>
+            </div>
+        </div>
+    </div>
+</form>
